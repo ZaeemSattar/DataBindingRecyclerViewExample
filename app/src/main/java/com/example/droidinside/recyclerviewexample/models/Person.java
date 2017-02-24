@@ -1,10 +1,17 @@
 package com.example.droidinside.recyclerviewexample.models;
 
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
+import com.example.droidinside.recyclerviewexample.BR;
+
 /**
  * Created by Droidinside on 2/23/2017.
  */
 
-public class Person {
+public class Person extends BaseObservable {
+
+    @Bindable
 
     public String getName() {
         return name;
@@ -16,7 +23,9 @@ public class Person {
 
     public Person(String name) {
         this.name = name;
+        setName(name);
+        notifyPropertyChanged(BR.name);
     }
 
-    String name;
+    private String name;
 }

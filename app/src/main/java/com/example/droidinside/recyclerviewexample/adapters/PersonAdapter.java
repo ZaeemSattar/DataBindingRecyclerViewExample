@@ -37,7 +37,18 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
     @Override
     public PersonViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        ViewDataBinding viewDataBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.row_person, parent, false);
+        ViewDataBinding viewDataBinding = null;
+
+        if (viewType == 0) {
+
+            viewDataBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.row_person, parent, false);
+
+        } else if (viewType == 1) {
+
+            viewDataBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.row_person_1, parent, false);
+
+        }
+
 
         Log.d("adapter", "onCreateViewHolder");
 
@@ -49,7 +60,16 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
 
         ViewDataBinding viewDataBinding = holder.getViewDataBinding();
 
-        viewDataBinding.setVariable(BR.person, personList.get(position));
+
+        if (holder.getItemViewType() == 0) {
+
+            viewDataBinding.setVariable(BR.person, personList.get(position));
+
+        } else if (holder.getItemViewType() == 1) {
+
+            viewDataBinding.setVariable(BR.person, personList.get(position));
+
+        }
 
         Log.d("adapter", "onBindViewHolder");
 
@@ -57,7 +77,14 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
     }
 
     @Override
+    public int getItemViewType(int position) {
+
+        return (position % 2 == 0 ? 0 : 1);
+    }
+
+    @Override
     public int getItemCount() {
+
         Log.d("adapter", "getItemCount");
 
         return (personList != null ? personList.size() : 0);
@@ -81,6 +108,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonView
         }
 
         ViewDataBinding getViewDataBinding() {
+
             return viewDataBinding;
         }
     }
